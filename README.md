@@ -1,2 +1,2 @@
-# facerecog_crossbuild
-Cross build of face recognition on edgescale
+# facerecog_demo
+Edgescale crossbuild for face recognition
