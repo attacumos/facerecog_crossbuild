@@ -55,6 +55,3 @@ index 4e379c7..cd4653c 100644
              #for (i, each) in  enumerate(rets):
              for ret  in  rets:
                  #for ret in each:
-diff --git a/facerecognition.so b/facerecognition.so
-index e8e0fb8..2f2dc8c 100755
-Binary files a/facerecognition.so and b/facerecognition.so differ
