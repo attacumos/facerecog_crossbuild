@@ -28,7 +28,8 @@ RUN pip install  flask_socketio
 
 RUN git clone https://github.com/nxp-gf/flask-server-for-ncnn                           &&\
     cd flask-server-for-ncnn                                                            &&\
-    git checkout f69e5afa1116dd08fd8ced5dc884e048e9731cc4                               
+    git checkout f69e5afa1116dd08fd8ced5dc884e048e9731cc4                               &&\
+    git apply --verbose --ignore-whitespace --reject /app/server.diff
 
 RUN git clone https://github.com/nxp-gf/ncnn-face-recognition.git                       &&\
     cd ncnn-face-recognition                                                            &&\

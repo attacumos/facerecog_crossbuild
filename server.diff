@@ -1,0 +1,60 @@
+diff --git a/camera_opencv.py b/camera_opencv.py
+index 4e379c7..cd4653c 100644
+--- a/camera_opencv.py
++++ b/camera_opencv.py
+@@ -5,6 +5,8 @@ import Queue
+ import numpy as np
+ import time,os
+ 
++global facerecog_time
++
+ def rotate(image, angle, center=None, scale=1.0):
+     (h, w) = image.shape[:2]
+ 
+@@ -17,6 +19,8 @@ def rotate(image, angle, center=None, scale=1.0):
+     return rotated
+ 
+ def draw_name(image, rect, name):
++    global facerecog_time
++    fps = "fps= "+ str(int(1000/facerecog_time))
+     # cv2.rectangle(images[i],(rect[0],rect[1]),(rect[0] + rect[2],rect[1]+rect[3]),(0,0,255),2)
+     # cv2.putText(images[i], ret['name'],(rect[0],rect[1]),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2)
+     cv2.rectangle(image,(rect[0],rect[1]),(rect[0] + rect[2],rect[1]+rect[3]),(127,255,0),1)
+@@ -40,11 +44,14 @@ def draw_name(image, rect, name):
+     cv2.line(image,(rect[0]+rect[2]/2,rect[1]-line_x),(rect[0]+rect[2]/2,rect[1]+line_x),(127,255,0),1)
+     #write name text
+     cv2.putText(image, name,(rect[0]+rect[2],rect[1]),cv2.FONT_HERSHEY_COMPLEX,int_y*1.0/40,(242,243,231),2)
++    #write fps
++    cv2.putText(image, fps,(10,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,0), 2)
+ 
+ 
+ facerecg = facerecognition.FaceRecognition("./models", 0.63)
+ 
+ class Camera(BaseCamera):
++
+     video_source = []
+     camera_number = 0
+     reg_ret = []
+@@ -71,6 +78,7 @@ class Camera(BaseCamera):
+ 
+     @staticmethod
+     def frames():
++        global facerecog_time
+         framequeue = []
+         cameras = []
+         for i in range(Camera.camera_number):
+@@ -97,7 +105,11 @@ class Camera(BaseCamera):
+                     Camera.new_name = None
+                 rets = []
+             else:
++                time_before = time.time()
+                 rets = facerecg.recognize(images[0].shape[0], images[0].shape[1], image_char)
++                time_after = time.time()
++                facerecog_time = 1000*(time_after - time_before)
++                #print "facerecog_time= ", facerecog_time
+             #for (i, each) in  enumerate(rets):
+             for ret  in  rets:
+                 #for ret in each:
+diff --git a/facerecognition.so b/facerecognition.so
+index e8e0fb8..2f2dc8c 100755
+Binary files a/facerecognition.so and b/facerecognition.so differ
