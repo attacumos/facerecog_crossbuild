@@ -3,13 +3,13 @@ version: 0.2
 env:
   variables:
     # Application settings
-    DOCKER_NAME: "facerecog_demo"
+    DOCKER_NAME: "nxp-facial"
     DOCKER_TAG: "latest"
     DOCKER_FILE: "Dockerfile"
     
     # Username of dockerhub 
-    DOCKERHUB_USER: "nxpml"
-    DOCKERHUB_PASSWD: "nxpmldemo"
+    DOCKERHUB_USER: "attacumos"
+    DOCKERHUB_PASSWD: "att123"
 
 phases:
   install:
